@@ -1,0 +1,1 @@
+This folder contains the key reference materials relied upon by student and project supervisors throughout the course (e.g., assessment timeline and rubric). It also contains some reading materials prepared by supervisors.
