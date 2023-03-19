@@ -1,0 +1,1 @@
+This folder contains everything related to the literature review of this project and references 
