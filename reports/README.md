@@ -1,0 +1,1 @@
+This folder contains various types of reports produced thorougout the project.
