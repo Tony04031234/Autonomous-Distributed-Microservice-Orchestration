@@ -1,0 +1,1 @@
+This folder contains the source code of any software artefact that authors develop in the project.
