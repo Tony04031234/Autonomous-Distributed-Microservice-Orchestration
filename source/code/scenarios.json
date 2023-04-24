@@ -1,0 +1,122 @@
+[
+	{
+		"id": 1,
+		"name": "Small fire",
+		"messages": [
+			{
+				"type": "agent",
+				"content": "Fire spotted near downtown",
+				"agentId": "1234"
+			},
+			{
+				"type": "fireTruck",
+				"content": "Fire spotted near downtown"
+			}
+		],
+		"agentFailure": false,
+		"serverFailure": false,
+		"networkLatency": 100,
+		"resourceAvailability": 100,
+		"workload": 1
+	},
+	{
+		"id": 2,
+		"name": "Large fire",
+		"messages": [
+			{
+				"type": "agent",
+				"content": "Large fire near the park",
+				"agentId": "5678"
+			},
+			{
+				"type": "fireTruck",
+				"content": "Large fire near the park"
+			}
+		],
+		"agentFailure": true,
+		"serverFailure": false,
+		"networkLatency": 300,
+		"resourceAvailability": 80,
+		"workload": 2
+	},
+	{
+		"id": 3,
+		"name": "Earthquake",
+		"messages": [
+			{
+				"type": "agent",
+				"content": "Earthquake detected, multiple incidents reported",
+				"agentId": "3141"
+			},
+			{
+				"type": "fireTruck",
+				"content": "Earthquake detected, multiple incidents reported"
+			}
+		],
+		"agentFailure": false,
+		"serverFailure": true,
+		"networkLatency": 500,
+		"resourceAvailability": 60,
+		"workload": 5
+	},
+	{
+		"id": 4,
+		"name": "Flood",
+		"messages": [
+			{
+				"type": "agent",
+				"content": "Flood warning near the river",
+				"agentId": "2580"
+			},
+			{
+				"type": "fireTruck",
+				"content": "Flood warning near the river"
+			}
+		],
+		"agentFailure": false,
+		"serverFailure": true,
+		"networkLatency": 200,
+		"resourceAvailability": 100,
+		"workload": 3
+	},
+	{
+		"id": 5,
+		"name": "Gas Leak",
+		"messages": [
+			{
+				"type": "agent",
+				"content": "Gas leak reported in residential area",
+				"agentId": "8462"
+			},
+			{
+				"type": "fireTruck",
+				"content": "Gas leak reported in residential area"
+			}
+		],
+		"agentFailure": true,
+		"serverFailure": false,
+		"networkLatency": 400,
+		"resourceAvailability": 70,
+		"workload": 4
+	},
+	{
+		"id": 6,
+		"name": "Chemical Spill",
+		"messages": [
+			{
+				"type": "agent",
+				"content": "Chemical spill at the industrial facility",
+				"agentId": "9512"
+			},
+			{
+				"type": "fireTruck",
+				"content": "Chemical spill at the industrial facility"
+			}
+		],
+		"agentFailure": true,
+		"serverFailure": true,
+		"networkLatency": 600,
+		"resourceAvailability": 50,
+		"workload": 6
+	}
+]
