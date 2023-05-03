@@ -10,7 +10,7 @@ fs.readFile('scenarios.json', (err, data) => {
 
     const width = 800; //px
     const height = 600; //px
-    
+
     const chartCallback = (ChartJS) => {
         // Disable the on-canvas plugin
         ChartJS.plugins.register({
@@ -48,7 +48,7 @@ fs.readFile('scenarios.json', (err, data) => {
                     }
                 }]
             },
-            plugins: { // Include your plugins directly in the configuration
+            plugins: { 
                 beforeDraw: function (chartInstance, easing) {
                     const ctx = chartInstance.chart.ctx;
                     ctx.fillStyle = 'white';
