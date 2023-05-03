@@ -48,14 +48,15 @@ The Emergency Management System is designed to handle emergency situations in di
 
 ### Scenario Table
 
-| Scenario       | Description                                       | Agent Failure | Server Failure | Network Latency |
-| -------------- | ------------------------------------------------- | ------------- | -------------- | --------------- |
-| Small fire     | Fire spotted near downtown                        | false         | false          | 100             |
-| Large fire     | Large fire near the park                          | true          | false          | 300             |
-| Earthquake     | Earthquake detected, multiple incidents reported | false         | true           | 500             |
-| Flood          | Flood warning near the river                      | false         | true           | 200             |
-| Gas Leak       | Gas leak reported in residential area             | true          | false          | 400             |
-| Chemical Spill | Chemical spill at the industrial facility         | true          | true           | 600             |
+| Scenario       | Description                                       | Agent Failure | Server Failure | Network Latency | Response Time | Resource Availability | Workload |
+| -------------- | ------------------------------------------------- | ------------- | -------------- | --------------- | ------------- | -------------------- | -------- |
+| Small fire     | Fire spotted near downtown                        | false         | false          | 100             |               | 100                  | 1        |
+| Large fire     | Large fire near the park                          | true          | false          | 300             |               | 80                   | 2        |
+| Earthquake     | Earthquake detected, multiple incidents reported | false         | true           | 500             |               | 60                   | 5        |
+| Flood          | Flood warning near the river                      | false         | true           | 200             |               | 100                  | 3        |
+| Gas Leak       | Gas leak reported in residential area             | true          | false          | 400             |               | 70                   | 4        |
+| Chemical Spill | Chemical spill at the industrial facility         | true          | true           | 600             |               | 50                   | 6        |
+
 
 These scenarios can be customized based on the specific needs and the emergency response team.
 
