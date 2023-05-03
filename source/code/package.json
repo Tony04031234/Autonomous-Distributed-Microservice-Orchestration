@@ -10,6 +10,10 @@
   "license": "ISC",
   "dependencies": {
     "amqplib": "^0.10.3",
+    "chart.js": "^2.9.4",
+    "chartjs-node-canvas": "^4.1.6",
+    "node-fetch": "^3.3.1",
+    "plotly.js-dist": "^2.22.0",
     "yargs": "^17.7.1"
   }
 }

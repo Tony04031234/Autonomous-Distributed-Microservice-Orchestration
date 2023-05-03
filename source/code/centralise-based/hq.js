@@ -93,3 +93,10 @@ This traditional microservices system uses direct exchanges in RabbitMQ for comm
 allowing you to route messages to specific queues (emergency responders) based on routing keys. 
 The headquarter coordinates the entire system and manages decision-making and resource allocation.
 */ 
+
+/* 
+
+what is lacking ? 
+
+
+*/
