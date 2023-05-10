@@ -1,13 +1,11 @@
 {
-  "name": "agent-based",
+  "name": "uni-code",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "agent": "node agent/agent.js",
-    "app": "node app/app.js",
-    "firetruck": "node firetruck/firetruck.js",
-    "hq": "node hq/hq.js"
+    "start": "node hq.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",

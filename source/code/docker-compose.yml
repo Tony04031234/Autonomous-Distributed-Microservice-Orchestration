@@ -1,0 +1,25 @@
+version: '3'
+services:
+  rabbitmq:
+    image: 'rabbitmq:3-management'
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+  agent_based_app:
+    build: ./agent-based/app
+    ports:
+      - '3000:3000'
+    depends_on:
+      - rabbitmq
+  agent_based_firetruck:
+    build: ./agent-based/firetruck
+    depends_on:
+      - rabbitmq
+  agent_based_hq:
+    build: ./agent-based/hq
+    depends_on:
+      - rabbitmq
+  agent_based_agent:
+    build: ./agent-based/agent
+    depends_on:
+      - rabbitmq
