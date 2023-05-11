@@ -5,10 +5,10 @@ const EXCHANGE_NAME = 'emergency_direct_exchange';
 
 const args = process.argv.slice(2);
 
-// Agent-based approach
+//1 Agent-based approach - network - communication protocol 
 function sendMessageToAgent(message, agentId) {
     return new Promise((resolve, reject) => {
-        amqp.connect('amqp://localhost', (error0, connection) => {
+        amqp.connect('amqp://5672:5672', (error0, connection) => {
             if (error0) {
                 throw error0;
             }
@@ -23,19 +23,67 @@ function sendMessageToAgent(message, agentId) {
                 console.log(`Agent based" Sent message "${message}" to agent ${agentId}`);
                 const end = performance.now();
                 console.log(`Time elapsed: ${end - start} milliseconds`);
-                setTimeout(() => {
+                setTimeout(async () => {
                     connection.close();
-                    process.exit(0);
+                    resolve();
                 }, 500);
             });
         });
     })
 }
 
-// Centralized  approach
+//2 Test sending a message from a fire truck to the HQ using the agent-based system
+function sendFireTruckMessageToHQ(message, agentId) {
+    return new Promise((resolve, reject) => {
+        amqp.connect('amqp://localhost:5672', (error0, connection) => {
+            if (error0) {
+                throw error0;
+            }
+            connection.createChannel((error1, channel) => {
+                if (error1) {
+                    throw error1;
+                }
+                const start = performance.now();
+                channel.assertQueue(`agent.${agentId}`, { durable: false });
+                channel.consume(`agent.${agentId}`, (msg) => {
+                    console.log(`Received message "${msg.content.toString()}" from fire truck`);
+                    const end = performance.now();
+                    console.log(`Time elapsed: ${end - start} milliseconds`);
+                    setTimeout(async () => {
+                        connection.close();
+                        resolve();
+                    }, 500);
+                }, { noAck: true });
+                channel.sendToQueue(`agent.${agentId}`, Buffer.from(message));
+                console.log(`Sent message "${message}" from fire truck`);
+            });
+        });
+    })
+}
+
+// Test sending message to multiple agents
+function sendMessagesToAgents(message, agentIds) {
+    agentIds.forEach(agentId => sendMessageToAgent(message, agentId));
+}
+sendMessagesToAgents('Fire spotted near downtown', ['1234', '5678', '91011']);
+
+// Test sending message to multiple fire trucks
+function sendMessagesToFireTrucks(message, truckIds) {
+    truckIds.forEach(truckId => sendMessageToFireTruck(`${message} (truck ${truckId})`));
+}
+sendMessagesToFireTrucks('Fire spotted near downtown', [1, 2, 3]);
+
+// Test sending message to both agents and fire trucks
+function sendEmergencyMessage(message, agentIds, truckIds) {
+    sendMessagesToAgents(message, agentIds);
+    sendMessagesToFireTrucks(message, truckIds);
+}
+sendEmergencyMessage('Fire spotted near downtown', ['1234', '5678'], [1, 2]);
+
+//3 Centralized  approach - network - communication protocol 
 function sendMessageToFireTruck(message) {
     return new Promise((resolve, reject) => {
-        amqp.connect('amqp://localhost', (error0, connection) => {
+        amqp.connect('amqp://localhost:5672', (error0, connection) => {
             if (error0) {
                 throw error0;
             }
@@ -50,19 +98,19 @@ function sendMessageToFireTruck(message) {
                 console.log(`centralise based: Sent message "${message}" to fire truck`);
                 const end = performance.now();
                 console.log(`Time elapsed: ${end - start} milliseconds`);
-                setTimeout(() => {
+                setTimeout(async () => {
                     connection.close();
-                    process.exit(0);
+                    resolve();
                 }, 500);
             });
         });
     })
 }
 
-// Test sending a message to multiple fire trucks using the centralized system
+//4 Test sending a message to multiple fire trucks using the centralized system
 function sendMessageToMultipleFireTrucks(message, numTrucks) {
     return new Promise((resolve, reject) => {
-        amqp.connect('amqp://localhost', (error0, connection) => {
+        amqp.connect('amqp://localhost:5672', (error0, connection) => {
             if (error0) {
                 throw error0;
             }
@@ -79,9 +127,9 @@ function sendMessageToMultipleFireTrucks(message, numTrucks) {
                 }
                 const end = performance.now();
                 console.log(`Time elapsed: ${end - start} milliseconds`);
-                setTimeout(() => {
+                setTimeout(async () => {
                     connection.close();
-                    process.exit(0);
+                    resolve();
                 }, 500);
             });
         });
@@ -89,39 +137,12 @@ function sendMessageToMultipleFireTrucks(message, numTrucks) {
 }
 
 
-// Test sending a message from a fire truck to the HQ using the agent-based system
-function sendFireTruckMessageToHQ(message, agentId) {
-    return new Promise((resolve, reject) => {
-        amqp.connect('amqp://localhost', (error0, connection) => {
-            if (error0) {
-                throw error0;
-            }
-            connection.createChannel((error1, channel) => {
-                if (error1) {
-                    throw error1;
-                }
-                const start = performance.now();
-                channel.assertQueue(`agent.${agentId}`, { durable: false });
-                channel.consume(`agent.${agentId}`, (msg) => {
-                    console.log(`Received message "${msg.content.toString()}" from fire truck`);
-                    const end = performance.now();
-                    console.log(`Time elapsed: ${end - start} milliseconds`);
-                    setTimeout(() => {
-                        connection.close();
-                        process.exit(0);
-                    }, 500);
-                }, { noAck: true });
-                channel.sendToQueue(`agent.${agentId}`, Buffer.from(message));
-                console.log(`Sent message "${message}" from fire truck`);
-            });
-        });
-    })
-}
 
-// Test sending a message from a fire truck to the HQ using the centralized system
+
+//5 Test sending a message from a fire truck to the HQ using the centralized system
 function sendFireTruckMessageToHQCentralized(message, truckId) {
     return new Promise((resolve, reject) => {
-        amqp.connect('amqp://localhost', (error0, connection) => {
+        amqp.connect('amqp://localhost:5672', (error0, connection) => {
             if (error0) {
                 throw error0;
             }
@@ -147,12 +168,12 @@ function sendFireTruckMessageToHQCentralized(message, truckId) {
                                 `Time elapsed for fire truck ${truckId} to receive message: ${end - start} milliseconds`
                             );
                             console.log(`Received response from HQ: ${msg.content.toString()}`);
-                            setTimeout(() => {
+                            setTimeout(async () => {
                                 connection.close();
-                                process.exit(0);
+                                resolve();
                             }, 500);
                         },
-                        { noAck: true }
+                        { noAck: false }
                     );
                 });
             });
@@ -160,14 +181,14 @@ function sendFireTruckMessageToHQCentralized(message, truckId) {
     })
 }
 
-// Simulate network congestion
+//6 Simulate network congestion
 const NUM_MESSAGES = 100;
 const MESSAGE = 'Fire spotted near downtown';
 
 // Agent-based approach
 function testAgentCongestion() {
     return new Promise((resolve, reject) => {
-        amqp.connect('amqp://localhost', (error0, connection) => {
+        amqp.connect('amqp://localhost:5672', (error0, connection) => {
             if (error0) {
                 throw error0;
             }
@@ -183,19 +204,19 @@ function testAgentCongestion() {
                     const end = performance.now();
                     console.log(`Sent message "${MESSAGE}" to agent ${i}. Time elapsed: ${end - start} milliseconds`);
                 }
-                setTimeout(() => {
+                setTimeout(async () => {
                     connection.close();
-                    process.exit(0);
+                    resolve();
                 }, 500);
             });
         });
     })
 }
 
-// Centralized microservices approach
+//7 Centralized microservices approach
 function testCentralizedCongestion() {
     return new Promise((resolve, reject) => {
-        amqp.connect('amqp://localhost', (error0, connection) => {
+        amqp.connect('amqp://localhost:5672', (error0, connection) => {
             if (error0) {
                 throw error0;
             }
@@ -211,19 +232,19 @@ function testCentralizedCongestion() {
                     const end = performance.now();
                     console.log(`Sent message "${MESSAGE} (truck ${i % 3 + 1})" to fire truck. Time elapsed: ${end - start} milliseconds`);
                 }
-                setTimeout(() => {
+                setTimeout(async () => {
                     connection.close();
-                    process.exit(0);
+                    resolve();
                 }, 500);
             });
         });
     })
 }
 
-// Test fault tolerance in agent-based approach
+//8 Test fault tolerance in agent-based approach
 function testAgentFaultTolerance() {
     return new Promise((resolve, reject) => {
-        amqp.connect('amqp://localhost', (error0, connection) => {
+        amqp.connect('amqp://localhost:5672', (error0, connection) => {
             if (error0) {
                 throw error0;
             }
@@ -244,16 +265,17 @@ function testAgentFaultTolerance() {
                 channel.publish('emergency_exchange', routingKey, Buffer.from(message));
                 console.log(`Sent message "${message}" to agent ${originalAgentId}`);
                 // Wait for the message to be processed by the backup agent
-                setTimeout(() => {
+                setTimeout(async () => {
                     const end = performance.now();
                     console.log(`Time elapsed: ${end - start} milliseconds`);
                     connection.close();
-                    process.exit(0);
+                    resolve();
                 }, 500);
             });
         });
     })
 }
+
 async function runAllTests() {
     console.log("Running sendMessageToAgent...");
     await sendMessageToAgent("Fire spotted near downtown", "1234");
@@ -341,8 +363,16 @@ module.exports = {
     sendMessageToAgent,
     sendMessageToFireTruck,
     sendMessageToMultipleFireTrucks,
-  };
-  
+    sendEmergencyMessage,
+    sendEmergencyMessage,
+    sendMessageToMultipleFireTrucks,
+    sendFireTruckMessageToHQ,
+    sendFireTruckMessageToHQCentralized,
+    testAgentCongestion,
+    testCentralizedCongestion,
+    testAgentFaultTolerance
+};
+
 /*
 sendMessageToAgent: Sends a message to an agent using the agent-based approach.
 sendMessageToFireTruck: Sends a message to a fire truck using the centralized approach.
