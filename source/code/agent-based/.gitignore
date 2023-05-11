@@ -12,15 +12,6 @@ test_output/
 logs/
 *.log
 
-# Runtime data
-pids/
-*.pid
-*.seed
-*.pid.lock
-
-# Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
-.grunt
-
 # Dependency directory
 node-webkit-builder/cache/
 
@@ -31,7 +22,4 @@ node-webkit-builder/cache/
 .DS_Store
 .DS_Store?
 ._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
+

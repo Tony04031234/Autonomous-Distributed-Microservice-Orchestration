@@ -23,3 +23,17 @@ services:
     build: ./agent-based/agent
     depends_on:
       - rabbitmq
+  centralise_based_app:
+    build: ./centralise-based/app
+    ports:
+      - '4000:3000'
+    depends_on:
+      - rabbitmq
+  centralise_based_firetruck:
+    build: ./centralise-based/firetruck
+    depends_on:
+      - rabbitmq
+  centralise_based_hq:
+    build: ./centralise-based/hq
+    depends_on:
+      - rabbitmq
