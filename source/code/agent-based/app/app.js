@@ -66,3 +66,4 @@ app.listen(PORT, () => {
 
 connectRabbitMQ();
 
+module.exports = app;

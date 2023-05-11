@@ -9,6 +9,9 @@ The Emergency Management System is designed to handle emergency situations in di
   - [System Components](#system-components)
     - [Agent-based system](#agent-based-system)
     - [Centralized system](#centralized-system)
+  - [Architecture Overview](#architecture-overview)
+    - [Communication Flow](#communication-flow)
+    - [Separation of Concerns](#separation-of-concerns)
   - [Testing Process](#testing-process)
     - [Test Setup and Scenarios](#test-setup-and-scenarios)
     - [Scenario Table](#scenario-table)
@@ -37,6 +40,31 @@ The Emergency Management System is designed to handle emergency situations in di
 - `firetruck.js`: Represents a fire truck agent in the system.
 - `hq.js`: Represents the headquarters agent in the system.
 - `app.js`: Facilitates RabbitMQ connections between agents.
+
+## Architecture Overview
+
+This application consists of the following components:
+
+- Client (Web Browser or API client)
+- Express Server (API)
+- RabbitMQ Server (Message Broker)
+
+### Communication Flow
+
+The communication flow between the components is as follows:
+
+1. **Client -> Express Server**: The client sends an HTTP request (GET or POST) to the Express Server.
+2. **Express Server -> RabbitMQ Server**: Based on the received HTTP request, the Express Server sends or receives messages from the RabbitMQ server using the appropriate queue or exchange.
+3. **RabbitMQ Server -> Other Components (Firetruck, Ambulance, Police, etc.)**: RabbitMQ is responsible for passing messages between different components in your application. It ensures that messages are routed to the correct recipients and handles message persistence and delivery guarantees.
+
+### Separation of Concerns
+
+The separation of concerns is evident in this setup:
+
+- The Express Server is only responsible for handling incoming and outgoing HTTP requests.
+- The RabbitMQ Server is in charge of message passing and coordination among the components of your application.
+
+This allows each component to focus on its specific role, making your application more modular and maintainable.
 
 ## Testing Process
 
