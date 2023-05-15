@@ -24,6 +24,12 @@ The Emergency Management System is designed to handle emergency situations in di
   - [Installation](#installation)
   - [Running the Tests](#running-the-tests)
   - [Modifying Test Scenarios](#modifying-test-scenarios)
+  - [Docker Setup](#docker-setup)
+    - [Installation](#installation-1)
+    - [Building Docker Images](#building-docker-images)
+  - [Kubernetes Setup](#kubernetes-setup)
+  - [Installation](#installation-2)
+    - [Deploying Applications](#deploying-applications)
   - [Chaos Mesh](#chaos-mesh)
     - [Installing Chaos Mesh](#installing-chaos-mesh)
     - [Creating Chaos Experiments](#creating-chaos-experiments)
@@ -108,6 +114,7 @@ These scenarios can be customized based on the specific needs and the emergency 
 
 #### 2. Result
 
+```
 Output example:
 
 Running test for scenario 1: Small fire
@@ -153,6 +160,7 @@ Time elapsed: 0.28254103660583496 milliseconds
 centralise based: Sent message "Gas leak reported in residential area" to fire truck
 
 Time elapsed: 0.33116698265075684 milliseconds"
+```
 
 #### 3. Analysis
 
@@ -203,6 +211,99 @@ For example:
   "workload": 1
 }
 ```
+
+## Docker Setup
+
+Docker is a platform that uses OS-level virtualization to deliver software in packages called containers. Containers are isolated from each other and bundle their own software, libraries, and system tools.
+
+### Installation
+
+1. Download Docker for your operating system from [Docker's official website](https://www.docker.com/products/docker-desktop).
+2. Install Docker following the instructions for your operating system.
+3. Verify the installation by running the following command in your terminal:
+
+```bash
+docker --version
+```
+### Building Docker Images
+
+To package your application into a Docker container, you need to create a Dockerfile. Here's a simple example of a Dockerfile for a Node.js application:
+
+```
+# Use the official Node.js runtime as base image
+FROM node:14
+
+# Set the working directory in the container
+WORKDIR /usr/src/app
+
+# Copy package.json and package-lock.json
+COPY package*.json ./
+
+# Install the application dependencies
+RUN npm install
+
+# Copy the rest of the application code
+COPY . .
+
+# Expose port 8080 to be accessed outside of the container
+EXPOSE 8080
+
+# Run the application
+CMD [ "node", "app.js" ]
+
+```
+To build the Docker image, navigate to the directory containing the Dockerfile and run the following command:
+
+``` bash 
+docker build -t your-image-name 
+```
+
+## Kubernetes Setup
+
+Kubernetes is an open-source platform designed to automate deploying, scaling, and operating application containers.
+
+## Installation
+
+1. Install a Kubernetes distribution, for example, Minikube for local testing, or Amazon EKS, Google Kubernetes Engine (GKE), or Azure Kubernetes Service (AKS) for cloud environments.
+2. Install kubectl, a command-line tool used to deploy and manage applications on Kubernetes. You can install it following these instructions.
+3. Verify the installation by checking the version of kubectl:
+
+```bash 
+kubectl version --client
+```
+
+### Deploying Applications
+
+To deploy your Dockerized application on Kubernetes, you need to create a Kubernetes Deployment configuration. Here's a simple example:
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: your-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: your-app
+  template:
+    metadata:
+      labels:
+        app: your-app
+    spec:
+      containers:
+      - name: your-app
+        image: your-image-name
+        ports:
+        - containerPort: 8080
+```
+You can apply this configuration using kubectl:
+
+```bash
+kubectl apply -f your-deployment.yaml
+```
+
+Remember to replace "your-image-name" and "your-app" with the actual names of your Docker image and application.
 
 ## Chaos Mesh
 
