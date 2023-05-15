@@ -1,4 +1,4 @@
-const { sendMessageToAgent, sendMessageToFireTruck, sendMessageToMultipleFireTrucks } = require('./test.js');
+const { sendMessageToAgent, sendMessageToFireTruck, sendMessageToMultipleFireTrucks } = require('../test.js');
 const scenarios = require('./scenarios.json');
 
 async function runTestForAgentSystem(scenario) {

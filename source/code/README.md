@@ -24,7 +24,7 @@ The Emergency Management System is designed to handle emergency situations in di
   - [Installation](#installation)
   - [Running the Tests](#running-the-tests)
   - [Modifying Test Scenarios](#modifying-test-scenarios)
-  - [Install Chaos Mesh](#install-chaos-mesh)
+  - [Chaos Mesh](#chaos-mesh)
     - [Installing Chaos Mesh](#installing-chaos-mesh)
     - [Creating Chaos Experiments](#creating-chaos-experiments)
     - [Monitoring Chaos Experiments](#monitoring-chaos-experiments)
@@ -203,6 +203,7 @@ For example:
   "workload": 1
 }
 ```
+
 ## Chaos Mesh
 
 Chaos Testing with Chaos Mesh
@@ -264,9 +265,3 @@ When you're finished with your chaos experiments, you can uninstall Chaos Mesh w
 `curl -sSL https://mirrors.chaos-mesh.org/v2.0.0/install.sh | bash -s -- --template | kubectl delete -f -`
 
 Note: Please remember to replace "target-app" in the example with the actual label of your application.
-
-
-
- 
-
-

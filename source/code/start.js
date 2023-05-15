@@ -12,3 +12,4 @@ scenarioTests.stderr.on('data', (data) => {
 scenarioTests.on('close', (code) => {
   console.log(`scenarioTests process exited with code ${code}`);
 });
+
