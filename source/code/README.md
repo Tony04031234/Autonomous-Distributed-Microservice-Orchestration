@@ -75,13 +75,12 @@ The communication flow between the components is as follows:
 The separation of concerns is evident in this setup:
 
 - The **Express Server** is only responsible for handling incoming and outgoing HTTP requests.
-- The **RabbitMQ Server** is in charge of message passing and coordination among the components of your application.
+- The **RabbitMQ Server** is in charge of message passing and coordination among the components of the application.
 - **Docker** is used to package each component of the application into a separate container, ensuring that each component has its own isolated environment with all the dependencies it needs to run.
 - **Kubernetes** is responsible for managing these containers, handling tasks like load balancing, network traffic distribution, and scaling the application as needed.
-- **Chaos Mesh** introduces chaos into the system, allowing you to test how well your application can handle unexpected failures or disruptions.
+- **Chaos Mesh** introduces chaos into the system, allowing you to test how well the application can handle unexpected failures or disruptions.
 
 This allows each component to focus on its specific role, making the application more modular, maintainable, and resilient. Each component is packaged into a Docker container and managed by Kubernetes, ensuring that the application can scale and recover from failures. At the same time, Chaos Mesh helps to ensure that the application is ready to handle real-world disruptions.
-
 
 ## Testing Process
 
