@@ -24,6 +24,11 @@ The Emergency Management System is designed to handle emergency situations in di
   - [Installation](#installation)
   - [Running the Tests](#running-the-tests)
   - [Modifying Test Scenarios](#modifying-test-scenarios)
+  - [Install Chaos Mesh](#install-chaos-mesh)
+    - [Installing Chaos Mesh](#installing-chaos-mesh)
+    - [Creating Chaos Experiments](#creating-chaos-experiments)
+    - [Monitoring Chaos Experiments](#monitoring-chaos-experiments)
+    - [Uninstalling Chaos Mesh](#uninstalling-chaos-mesh)
 
 ## System Components
 
@@ -197,3 +202,71 @@ For example:
   "resourceAvailability": 100,
   "workload": 1
 }
+```
+## Chaos Mesh
+
+Chaos Testing with Chaos Mesh
+
+Chaos Mesh is a cloud-native Chaos Engineering platform that orchestrates chaos on Kubernetes environments. In the context of our system, it can help us simulate real-world disruptions and observe how our system handles them.
+
+### Installing Chaos Mesh
+
+You can install Chaos Mesh on your Kubernetes cluster using a script. This script will automatically install the required components and related Service Account.
+
+```bash
+# Install Chaos Mesh
+curl -sSL https://mirrors.chaos-mesh.org/v2.0.0/install.sh | bash
+```
+
+### Creating Chaos Experiments
+
+Chaos Mesh supports several types of chaos experiments such as pod kill, network delay, etc. You can define your experiments in YAML files.
+
+Here is an example of a NetworkChaos experiment that introduces a network delay:
+
+```yaml
+apiVersion: chaos-mesh.org/v1alpha1
+kind: NetworkChaos
+metadata:
+  name: network-delay-example
+  namespace: default
+spec:
+  action: delay
+  mode: one
+  selector:
+    namespaces:
+      - default
+    labelSelectors:
+      "app": "target-app"
+  delay:
+    latency: "10ms"
+  duration: "30s"
+  scheduler:
+    cron: "@every 60s"
+```
+You can apply this experiment with the kubectl apply command:
+`kubectl apply -f network_delay.yaml`
+
+### Monitoring Chaos Experiments
+
+Chaos Mesh provides a dashboard for you to monitor the status of chaos experiments. You can access the dashboard through Kubernetes' API server. By default, the dashboard is available at http://localhost:2333.
+
+You can use the following command to setup port forwarding for the dashboard:
+
+`kubectl port-forward -n chaos-testing svc/chaos-dashboard 2333:80`
+
+After setting up port forwarding, you can open a web browser and visit http://localhost:2333 to access the Chaos Mesh dashboard.
+
+### Uninstalling Chaos Mesh
+
+When you're finished with your chaos experiments, you can uninstall Chaos Mesh with the following command:
+
+`curl -sSL https://mirrors.chaos-mesh.org/v2.0.0/install.sh | bash -s -- --template | kubectl delete -f -`
+
+Note: Please remember to replace "target-app" in the example with the actual label of your application.
+
+
+
+ 
+
+
