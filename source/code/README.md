@@ -54,28 +54,34 @@ The Emergency Management System is designed to handle emergency situations in di
 
 ## Architecture Overview
 
-This application consists of the following components:
+This application consists of the following components, all of which are containerized using Docker and orchestrated using Kubernetes:
 
 - Client (Web Browser or API client)
 - Express Server (API)
 - RabbitMQ Server (Message Broker)
+- Chaos Mesh (Chaos Testing)
 
 ### Communication Flow
 
 The communication flow between the components is as follows:
 
-1. **Client -> Express Server**: The client sends an HTTP request (GET or POST) to the Express Server.
-2. **Express Server -> RabbitMQ Server**: Based on the received HTTP request, the Express Server sends or receives messages from the RabbitMQ server using the appropriate queue or exchange.
-3. **RabbitMQ Server -> Other Components (Firetruck, Ambulance, Police, etc.)**: RabbitMQ is responsible for passing messages between different components in your application. It ensures that messages are routed to the correct recipients and handles message persistence and delivery guarantees.
+1. **Client -> Express Server:** The client sends an HTTP request (GET or POST) to the Express Server.
+2. **Express Server -> RabbitMQ Server:** Based on the received HTTP request, the Express Server sends or receives messages from the RabbitMQ server using the appropriate queue or exchange.
+3. **RabbitMQ Server -> Other Components (Firetruck, Ambulance, Police, etc.):** RabbitMQ is responsible for passing messages between different components in your application. It ensures that messages are routed to the correct recipients and handles message persistence and delivery guarantees.
+4. **Chaos Mesh:** Used to introduce chaos into the system to test its resilience and reliability. It could target any of the above components with different types of failures.
 
 ### Separation of Concerns
 
 The separation of concerns is evident in this setup:
 
-- The Express Server is only responsible for handling incoming and outgoing HTTP requests.
-- The RabbitMQ Server is in charge of message passing and coordination among the components of your application.
+- The **Express Server** is only responsible for handling incoming and outgoing HTTP requests.
+- The **RabbitMQ Server** is in charge of message passing and coordination among the components of your application.
+- **Docker** is used to package each component of the application into a separate container, ensuring that each component has its own isolated environment with all the dependencies it needs to run.
+- **Kubernetes** is responsible for managing these containers, handling tasks like load balancing, network traffic distribution, and scaling the application as needed.
+- **Chaos Mesh** introduces chaos into the system, allowing you to test how well your application can handle unexpected failures or disruptions.
 
-This allows each component to focus on its specific role, making your application more modular and maintainable.
+This allows each component to focus on its specific role, making the application more modular, maintainable, and resilient. Each component is packaged into a Docker container and managed by Kubernetes, ensuring that the application can scale and recover from failures. At the same time, Chaos Mesh helps to ensure that the application is ready to handle real-world disruptions.
+
 
 ## Testing Process
 
@@ -218,16 +224,16 @@ Docker is a platform that uses OS-level virtualization to deliver software in pa
 
 ### Installation
 
-1. Download Docker for your operating system from [Docker's official website](https://www.docker.com/products/docker-desktop).
-2. Install Docker following the instructions for your operating system.
-3. Verify the installation by running the following command in your terminal:
+1. Download Docker for the operating system from [Docker's official website](https://www.docker.com/products/docker-desktop).
+2. Install Docker following the instructions for the operating system.
+3. Verify the installation by running the following command in the terminal:
 
 ```bash
 docker --version
 ```
 ### Building Docker Images
 
-To package your application into a Docker container, you need to create a Dockerfile. Here's a simple example of a Dockerfile for a Node.js application:
+To package the application into a Docker container, you need to create a Dockerfile. Here's a simple example of a Dockerfile for a Node.js application:
 
 ```
 # Use the official Node.js runtime as base image
@@ -274,7 +280,7 @@ kubectl version --client
 
 ### Deploying Applications
 
-To deploy your Dockerized application on Kubernetes, you need to create a Kubernetes Deployment configuration. Here's a simple example:
+To deploy the Dockerized application on Kubernetes, you need to create a Kubernetes Deployment configuration. Here's a simple example:
 
 ```
 apiVersion: apps/v1
@@ -303,7 +309,7 @@ You can apply this configuration using kubectl:
 kubectl apply -f your-deployment.yaml
 ```
 
-Remember to replace "your-image-name" and "your-app" with the actual names of your Docker image and application.
+Remember to replace "your-image-name" and "your-app" with the actual names of the Docker image and application.
 
 ## Chaos Mesh
 
@@ -313,7 +319,7 @@ Chaos Mesh is a cloud-native Chaos Engineering platform that orchestrates chaos 
 
 ### Installing Chaos Mesh
 
-You can install Chaos Mesh on your Kubernetes cluster using a script. This script will automatically install the required components and related Service Account.
+You can install Chaos Mesh on the Kubernetes cluster using a script. This script will automatically install the required components and related Service Account.
 
 ```bash
 # Install Chaos Mesh
@@ -322,7 +328,7 @@ curl -sSL https://mirrors.chaos-mesh.org/v2.0.0/install.sh | bash
 
 ### Creating Chaos Experiments
 
-Chaos Mesh supports several types of chaos experiments such as pod kill, network delay, etc. You can define your experiments in YAML files.
+Chaos Mesh supports several types of chaos experiments such as pod kill, network delay, etc. You can define the experiments in YAML files.
 
 Here is an example of a NetworkChaos experiment that introduces a network delay:
 
@@ -361,8 +367,8 @@ After setting up port forwarding, you can open a web browser and visit http://lo
 
 ### Uninstalling Chaos Mesh
 
-When you're finished with your chaos experiments, you can uninstall Chaos Mesh with the following command:
+When you're finished with the chaos experiments, you can uninstall Chaos Mesh with the following command:
 
 `curl -sSL https://mirrors.chaos-mesh.org/v2.0.0/install.sh | bash -s -- --template | kubectl delete -f -`
 
-Note: Please remember to replace "target-app" in the example with the actual label of your application.
+Note: Please remember to replace "target-app" in the example with the actual label of the application.
