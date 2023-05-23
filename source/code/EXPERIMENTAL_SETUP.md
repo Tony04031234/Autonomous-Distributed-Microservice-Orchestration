@@ -43,3 +43,66 @@ Based on the analysis of the experimental results, adjustments will be made to i
 
 This experimental setup aims to test the agent-based system under DDIL scenarios using Chaos Mesh. By simulating denied, degraded, intermittent, or low-bandwidth network conditions, we gain valuable insights into the behavior and performance of the system. These experiments contribute to our understanding of how the system operates in challenging network environments.
 
+## Project directory
+    
+    ├── agent-based
+    │   ├── agent
+    │   │   ├── Dockerfile
+    │   │   └── agent.js
+    │   ├── app
+    │   │   ├── Dockerfile
+    │   │   └── app.js
+    │   ├── firetruck
+    │   │   ├── Dockerfile
+    │   │   └── firetruck.js
+    │   ├── hq
+    │   │   ├── Dockerfile
+    │   │   └── hq.js
+    │   └── package.json
+    ├── centralise-based
+    │   ├── app
+    │   │   ├── Dockerfile
+    │   │   └── app.js
+    │   ├── firetruck
+    │   │   ├── Dockerfile
+    │   │   └── firetruck.js
+    │   ├── hq
+    │   │   ├── Dockerfile
+    │   │   └── hq.js
+    │   └── package.json
+    |——— interface
+    |  |—— agent_interface.js
+    |  |——firetruck_interface.js 
+    |  |—— hq_interface.js
+    |——— Kubernetes
+    |   |___ agent-based-agent-deployment.yaml
+    |.  |___ agent-based-app-deployment.yaml
+    |.  |___ agent-based-app-service.yaml
+    |.  |___ agent-based-firetruck-deployment.yaml
+    |.  |___ agent-based-hq-deployment.yaml
+    |.  |___ centralise_based_app-service.yaml
+    |.  |___ centralise-based-app-deployment.yaml
+    |.  |___ centralise-based-firetruck-deployment.yaml
+    |.  |___ centralise-based-hq-deployment.yaml
+    |.  |___ code-default-networkpolicy.yaml
+    |   |___ rabbitmq-deployment.yaml
+    |.  |___ rabbitmq-service.yaml
+    |——— node_modules
+    |——— test
+    |.  |___ scenario.json
+    |.  |___ scenarioTests.js
+    |.  |___ simulationRunner.js
+    |.  |—— unit_test.js 
+    |——— .gitignore
+    ├──- chart.js
+    |——— chart.png
+    ├-──  docker-compose.yml
+    |——— EXPECTED_RESULT.md
+    |——— EXPERIMENTAL_SETUP.md
+    |——— network_delay.yaml
+    |——— package-lock.json
+    |-──  package.json
+    |——— README.md
+    |——— [RESULT.md]
+    |——— start.js
+
