@@ -8,7 +8,7 @@ const args = process.argv.slice(2);
 //1 Agent-based approach - network - communication protocol 
 function sendMessageToAgent(message, agentId) {
     return new Promise((resolve, reject) => {
-        amqp.connect('amqp://5672:5672', (error0, connection) => {
+        amqp.connect('amqp://localhost:5672', (error0, connection) => {
             if (error0) {
                 throw error0;
             }

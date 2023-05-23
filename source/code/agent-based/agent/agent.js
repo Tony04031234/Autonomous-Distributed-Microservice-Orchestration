@@ -2,7 +2,7 @@ const amqp = require('amqplib/callback_api');
 
 const AGENT_ID = process.argv[2] || 1;
 
-amqp.connect('amqp://localhost', (error0, connection) => {
+amqp.connect('amqp://rabbitmq:5673', (error0, connection) => {
   if (error0) {
     throw error0;
   }

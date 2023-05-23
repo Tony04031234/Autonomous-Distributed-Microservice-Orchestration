@@ -4,7 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 // Define the RabbitMQ server address and queue name
-const RABBITMQ_SERVER = 'amqp://rabbitmq:5672';
+const RABBITMQ_SERVER = 'amqp://rabbitmq:5673';
 const QUEUE_NAME = 'firetruck-hq';
 
 // Create a new Express app and configure the body parser

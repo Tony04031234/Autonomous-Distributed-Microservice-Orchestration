@@ -25,7 +25,7 @@ spec:
         io.kompose.service: agent-based-app
     spec:
       containers:
-        - image: agent-based-app
+        - image: code-agent_based_app
           name: agent-based-app
           ports:
             - containerPort: 3000

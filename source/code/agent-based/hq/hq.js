@@ -2,7 +2,7 @@ const amqp = require('amqplib/callback_api');
 
 const AGENT_COUNT = 3;
 const EXCHANGE_NAME = 'emergency_exchange';
-const RABBITMQ_SERVER = 'amqp://rabbitmq:5672';
+const RABBITMQ_SERVER = 'amqp://rabbitmq:5673';
 
 function connectRabbitMQ() {
   amqp.connect(RABBITMQ_SERVER, (error0, connection) => {
