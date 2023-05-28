@@ -95,5 +95,3 @@ if (argv.centralise) {
   console.log('Please specify a valid option (agent or centralise).');
 }
 
-
-x

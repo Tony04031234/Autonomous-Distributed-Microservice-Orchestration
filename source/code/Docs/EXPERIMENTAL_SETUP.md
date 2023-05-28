@@ -87,21 +87,25 @@ This experimental setup aims to test the agent-based system under DDIL scenarios
     |.  |___ code-default-networkpolicy.yaml
     |   |___ rabbitmq-deployment.yaml
     |.  |___ rabbitmq-service.yaml
+    |——— logging
+    | . |——— fluentd.config
+    |——— monitoring
+    | . |——— prometheus.yml
     |——— node_modules
     |——— test
     |.  |___ scenario.json
     |.  |___ scenarioTests.js
     |.  |___ simulationRunner.js
-    |.  |—— unit_test.js 
+    |.  |___ unit_test.js 
     |——— .gitignore
     ├──- chart.js
     |——— chart.png
-    ├-──  docker-compose.yml
+    ├-── docker-compose.yml
     |——— EXPECTED_RESULT.md
     |——— EXPERIMENTAL_SETUP.md
     |——— network_delay.yaml
     |——— package-lock.json
-    |-──  package.json
+    |-── package.json
     |——— README.md
     |——— [RESULT.md]
     |——— start.js
