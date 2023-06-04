@@ -23,3 +23,25 @@ node-webkit-builder/cache/
 .DS_Store?
 ._*
 
+# Node dependencies
+node_modules/
+
+# Ignore logs
+*.log
+
+# Ignore environment files
+*.env
+
+# Docker
+**/Dockerfile
+.dockerignore
+
+# Package locks
+package-lock.json
+
+# Ignore any .DS_Store files (Mac OS)
+.DS_Store
+
+# Ignore the generated images
+*.png
+

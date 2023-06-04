@@ -4,14 +4,14 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-      "start": "node agent.js"
+        "start": "node agent.js"
     },
     "author": "",
     "license": "ISC",
     "dependencies": {
-      "amqplib": "^0.10.3",
-      "body-parser": "^1.20.2",
-      "express": "^4.18.2"
+        "amqplib": "^0.10.3",
+        "body-parser": "^1.20.2",
+        "express": "^4.18.2",
+        "request": "^2.88.2"
     }
-  }
-  
+}

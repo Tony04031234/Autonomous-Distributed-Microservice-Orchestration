@@ -3,7 +3,7 @@ const assert = require('assert');
 const request = require('supertest');
 const express = require('express');
 const bodyParser = require('body-parser');
-const app = require('./app');
+const app = require('../agent-based/app/app');
 
 describe('Agent Based App', () => {
   it('should send a message to the queue', (done) => {
